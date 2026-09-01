@@ -1,13 +1,14 @@
-= gail-materials
+= Google Cloud Generative AI Leader 認定試験の対策資料
 :lang: ja
 :toc: macro
 :toc-title: 目次
 :toclevels: 2
 
-Google Cloud Generative AI Leader 認定試験の対策資料。AsciiDoc で執筆し、PDF と HTML を生成する。
+Google Cloud Generative AI Leader 認定試験に向けて、生成AIの基礎から Google Cloud の製品群までを
+整理した学習ノートである。本文は AsciiDoc で書き、PDF と HTML を生成する。
 
-**これは個人が学習のためにまとめた非公式のノートであり、Google LLC とは一切関係がない。**
-内容の正確性は保証しない。<<免責事項>> を必ず読むこと。
+**本ノートは個人が学習のためにまとめた非公式の資料であり、Google LLC とは関係がない。
+記載内容の正確性は保証しない。** 利用する前に <<免責事項>> を必ず読むこと。
 
 toc::[]
 
@@ -56,11 +57,11 @@ toc::[]
 == 内容
 
 生成AIの基礎、Google Cloud の生成AI製品、出力の改善技法、ビジネス戦略と責任あるAI の4章に、
-試験概要と2つの付録を加えた構成。要件から製品・技法を引ける形にまとめている。
+試験概要と2つの付録を加えて構成している。要件から製品・技法を引ける形にまとめた。
 
 == 必要なもの
 
-自分でビルドする場合のみ必要。読むだけなら <<ダウンロード>> を見ること。
+以下は自分でビルドする場合にのみ必要となる。読むだけなら <<ダウンロード>> から入手できる。
 
 * Asciidoctor 2.0 以降
 * Asciidoctor PDF 2.3 以降
@@ -107,7 +108,7 @@ $ make check      # 壊れた include・相互参照を検出
 $ make clean      # 生成物を削除
 ----
 
-生成物は `build/pdf/gail.pdf`、`build/html/gail.html`。`build/` は Git の管理対象外。
+生成物は `build/pdf/gail.pdf` と `build/html/gail.html` に出力される。`build/` は Git の管理対象外である。
 
 == リリース
 
