@@ -85,7 +85,7 @@ jobs:
           REVDATE: ${{ steps.version.outputs.revdate }}
         run: |
           cat > notes.md <<'NOTES'
-          Google Cloud Generative AI Leader 認定試験の対策資料。
+          Google Cloud Generative AI Leader（GAIL）認定資格試験の対策資料。
 
           | ファイル | 内容 |
           | --- | --- |

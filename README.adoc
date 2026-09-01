@@ -1,7 +1,7 @@
-= Google Cloud Generative AI Leader 認定試験の対策資料
+= Google Cloud Generative AI Leader（GAIL）認定資格試験の対策資料
 :lang: ja
 
-Google Cloud Generative AI Leader 認定試験に向けて、生成AIの基礎から Google Cloud の製品群までを
+Google Cloud Generative AI Leader（GAIL）認定資格試験に向けて、生成AIの基礎から Google Cloud の製品群までを
 整理した学習ノートである。本文は AsciiDoc で書き、PDF と HTML を生成する。
 
 **本ノートは個人が学習のためにまとめた非公式の資料であり、Google LLC とは関係がない。
@@ -23,11 +23,11 @@ Google Cloud Generative AI Leader 認定試験に向けて、生成AIの基礎�
 
 === 位置づけ
 
-* 著者が Google Cloud Generative AI Leader 認定試験を受験するにあたり、**自分の理解を整理するために書いた個人の学習ノート**である。
+* 著者が GAIL を受験するにあたり、**自分の理解を整理するために書いた個人の学習ノート**である。
 * Google LLC およびその関連会社が作成・監修・承認したものではない。公式教材でも、公式教材の要約でもない。
 * 公式の学習パス、試験ガイド、製品ドキュメントを**置き換えるものではない**。本ノートは、それらを読む際の索引・地図として使うことを想定している。
-* 認定試験の合格を保証するものではない。
-* 実際の試験問題は含まれていない。Google の認定試験は受験時に守秘義務に同意する必要があり、本ノートは公開情報のみを出典としている。
+* GAIL の合格を保証するものではない。
+* 実際の試験問題は含まれていない。Google Cloud の認定資格試験は受験時に守秘義務に同意する必要があり、本ノートは公開情報のみを出典としている。
 
 === 情報の時点
 

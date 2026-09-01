@@ -1,6 +1,6 @@
-= Google Generative AI Leader 認定試験対策資料
+= Google Cloud Generative AI Leader（GAIL）認定資格試験の対策資料
 吉田敏幸 <yostos@yostos.org>
-:description: Google Cloud Generative AI Leader 認定試験の対策ノート。生成AIの基礎、Google Cloud の製品群、出力の改善技法、ビジネス戦略と責任あるAI を、要件から製品・技法を引ける形にまとめる。
+:description: Google Cloud Generative AI Leader（GAIL）認定資格試験の対策ノート。生成AIの基礎、Google Cloud の製品群、出力の改善技法、ビジネス戦略と責任あるAI を、要件から製品・技法を引ける形にまとめる。
 include::_attributes.adoc[]
 :revnumber: 0.1.0
 :revdate: 2026-08-27
