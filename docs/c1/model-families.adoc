@@ -1,0 +1,49 @@
+= モデルファミリーの選び分け
+include::../_attributes.adoc[]
+
+[cols="1,5,5", options="header"]
+|===
+| モデル | 用途 | 配置形態
+
+| Gemini | テキスト・コード・画像・音声・動画を扱うマルチモーダル基盤モデル。長いコンテキストウィンドウを持つ | Vertex AI または Gemini API 経由のマネージド利用
+| Gemma | 軽量なオープンウェイトモデル群。用途とモダリティは版による（テキスト中心。画像入力に対応する版もある） | オープンウェイト。ローカル・オンプレ・エッジに置いて動かせる
+| Imagen | 画像の生成・編集 | マネージド利用
+| Veo | 動画の生成 | マネージド利用
+| Chirp | 音声認識（音声→テキスト） | マネージド利用
+|===
+
+軸は3つ。
+
+[cols="1,5", options="header"]
+|===
+| 軸 | 判断
+
+| 配置形態 | 外部 API を呼ばない・オフライン・限られたローカルリソース・用途別カスタマイズ → Gemma（重みを配布するので自前環境で動かせる）。Gemini はマネージドサービス経由の利用が前提で外れる
+| モダリティ | 音声を文字に起こす → Chirp。その文字を要約・生成 → Gemini。文章と画像の両方 → Gemini（Imagen は文章生成が足りない）
+| 入力の量 | 数時間の会議ログや大量の技術文書を一度に分析・要約 → Gemini の長いコンテキストウィンドウ
+|===
+
+- 「音声データを要約する」は Chirp と Gemini の組み合わせ。Chirp 単体では要約できない。
+- Gemini はマルチモーダルで画像も理解するが、テキストからの高品質な画像生成は Imagen。生成が要件なら Imagen。
+- 覚える軸は Gemini＝Google のマルチモーダル基盤モデル（マネージド）、Gemma＝オープンウェイトのモデル群（自前配置）。
+- 画像・動画の生成を問われたら Gemma ではなく Imagen／Veo。
+
+各モデルが担えない範囲。
+
+[cols="2,2,1", options="header"]
+|===
+| 要件 | 担うモデル | よく誤答に置かれるモデル
+
+| テキストから写実的な静止画を作る | Imagen | Gemini、Veo
+| テキストや静止画から動画を作る | Veo | Imagen
+| 顧客フィードバックを分析して傾向を出す | Gemini | Imagen
+| 販売データから需要を予測する | 従来の機械学習（BigQuery ML、Vertex AI） | Imagen
+| 音声フィードバックを文字起こしする | Chirp | Imagen
+|===
+
+- Veo は静的な入力（テキスト・静止画）から動画を生成する。変動するライブデータストリームをリアルタイムに処理して動的に可視化することはできない。リアルタイムダッシュボードの要件では外す。
+- Gemini モデル群には Gemini Flash、Gemini Flash Image があり、文章生成・要約・アイデア出し・画像生成・会話型編集を横断して扱える。
+- 長いコンテキストで一括処理できるもの: 音声の文字起こし、技術文書、ログ、設計書、障害レポート。
+- Conversational Agents（旧 Dialogflow CX）はモデルではなく会話エージェント構築製品。モデルを問う設問では外す。
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/google-models[Google モデル一覧]、link:https://ai.google.dev/gemma/docs[Gemma の概要]、link:https://docs.cloud.google.com/vertex-ai/generative-ai/docs/image/overview[Imagen による画像生成]、link:https://docs.cloud.google.com/speech-to-text/docs/models/chirp-3[Chirp 3（音声認識）]

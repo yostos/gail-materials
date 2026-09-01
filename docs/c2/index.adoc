@@ -1,0 +1,22 @@
+= Google Cloud の生成AI製品
+include::../_attributes.adoc[]
+
+include::product-layers.adoc[leveloffset=+1]
+
+include::ai-infrastructure.adoc[leveloffset=+1]
+
+include::data-foundation.adoc[leveloffset=+1]
+
+include::vertex-ai.adoc[leveloffset=+1]
+
+include::prompt-playgrounds.adoc[leveloffset=+1]
+
+include::gemini-for-google-cloud.adoc[leveloffset=+1]
+
+include::gemini-enterprise-and-search.adoc[leveloffset=+1]
+
+include::customer-engagement-suite.adoc[leveloffset=+1]
+
+include::end-user-tools.adoc[leveloffset=+1]
+
+include::task-specific-apis.adoc[leveloffset=+1]

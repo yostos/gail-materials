@@ -1,0 +1,17 @@
+= Gemini for Google Cloud — 使う側の支援
+include::../_attributes.adoc[]
+
+[cols="1,3", options="header"]
+|===
+| 組み込み先 | できること
+
+| Gemini in BigQuery | SQL・Python コードの生成、補完、説明、データ準備、分析支援
+| Gemini Code Assist | インラインのコード候補とコード生成、デバッグ、単体テスト生成、コード最適化の提案
+| Gemini in Security Operations | 自然言語でのデータ検索、ケースの要約、ハンドブックと検出ルールの作成
+|===
+
+- 位置づけは「既存の作業を速くする道具」。Vertex AI の「作るための道具」と対になる。
+- Gemini Code Assist は IDE 上のコメント・書きかけのコード・関数定義・TODO を文脈に、ゴーストテキスト形式で候補を出す。
+- 「実装時間を短縮したい」に直接効くのはコード補完・生成。リリースノート作成やテスト結果の分析は要件からずれる。
+
+出典: link:https://docs.cloud.google.com/gemini/docs/overview[Gemini for Google Cloud の概要]、link:https://docs.cloud.google.com/gemini/docs/codeassist/overview[Gemini Code Assist の概要]、link:https://docs.cloud.google.com/bigquery/docs/gemini-overview[Gemini in BigQuery の概要]

@@ -1,0 +1,26 @@
+// 全ドキュメント共通の属性。
+// docs/index.adoc からも、docs/*/index.adoc（章・節単体ビルド）からも読まれる。
+// 文書ヘッダー内で include されるため、空行を入れないこと（空行はヘッダーを終端させる）。
+:lang: ja
+:doctype: book
+:toc: left
+:toc-title: 目次
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 4
+:sectanchors:
+:sectlinks:
+:xrefstyle: short
+:section-refsig: 節
+:chapter-signifier!:
+:appendix-caption: 付録
+:appendix-refsig: 付録
+:figure-caption: 図
+:table-caption: 表
+:imagesdir: images
+:scripts: cjk
+:source-highlighter: rouge
+:rouge-style: gruvbox
+:idprefix:
+:idseparator: -
+:experimental:

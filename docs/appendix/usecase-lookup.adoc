@@ -1,0 +1,56 @@
+= 用途からの逆引き
+include::../_attributes.adoc[]
+
+[cols="1,2", options="header"]
+|===
+| 要件 | 選ぶもの
+
+| 文章の要約・抽出・初稿生成 | Gemini／Gemma
+| 大量のログや長文を一度に分析・要約 | Gemini（長いコンテキストウィンドウ）
+| 文章と画像の両方を扱う | Gemini
+| オフライン・ローカルで動かす | Gemma
+| 画像を生成する／動画を生成する／音声を文字にする | Imagen／Veo／Chirp
+| ログ分析、予測、異常検出 | BigQuery ML／Vertex AI
+| 帳票 PDF から項目を構造化抽出する | Document AI
+| 社内文書を根拠付きで横断検索する | Vertex AI Search ＋ グラウンディング
+| 複数の長文資料を引用付きで比較・要約する | NotebookLM
+| 同じ入力に常に同じ判定を返す | ルールベースエンジン（生成AIではない）
+| モデル全体の性能とバイアス傾向を検証する | Vertex AI Model Evaluation
+| 公開ウェブの最新情報を回答に反映する | Google 検索によるグラウンディング
+| 対話の状態を次の応答へ引き継ぐ | プロンプトチェーン（前段の出力を次段の入力に渡す。状態の保持自体はアプリ側）
+| 出力形式を安定させる | フューショットプロンプト
+| 役割・視点・口調を固定する | ロールプロンプティング（システムプロンプト）
+| 読み手・トーン・観点・形式が合っていない | プロンプトに対象読者・トーン・必須キーワード・出力形式を明記
+| コーディングなしで検索・要約エージェントを作る | Vertex AI Agent Builder
+| 従業員が社内システムを横断して情報を引き出す | Gemini Enterprise
+| 顧客向けの自動応答チャットボットを作る | Conversational Agents
+| アプリに検索機能を組み込む | Vertex AI Search
+| ML の専門知識なしに AI を使う | ローコード／ノーコード（Vertex AI AutoML、Model Garden、API）
+| 設定なしで素早く複数案・初稿を出す | Gemini アプリ
+| 一次対応の自動化と有人支援をまとめて導入する | Contact Center as a Service
+| 複雑な判断を段階的に解かせる | Chain-of-Thought
+| 有害な出力を抑える | SafetySetting
+| ニュアンスの誤読を防ぐ | ヒューマンインザループ
+| 判断根拠を説明・監査可能にする | Vertex Explainable AI
+| 学習データから機密情報を除く | Sensitive Data Protection
+| 操作権限を役割別に分ける | IAM
+| 設定不備・脆弱性・脅威を一元検出する | Security Command Center
+| AI のセキュリティを枠組みで整理する | Secure AI Framework（SAIF）
+| 名寄せを保ったまま個人を隠す | 仮名化
+| 学習時と推論時の特徴量をそろえる | Feature Store
+| 入力分布の変化を検出する | Model Monitoring（ドリフト監視）
+| エージェントから外部 API を呼ぶ | Extensions
+| モデルに関数と引数を決めさせ、実行はアプリ側で行う | Functions（関数呼び出し）
+| 用途別に指示を固定した使い回し設定を作る | Gems（Gemini Advanced）
+| 書式を保ったまま文書を翻訳する | Document Translation API
+| 動画内の物体やシーンを検出する | Cloud Video Intelligence API
+| プロンプトを最速で試す | Google AI Studio
+| ベンダーをまたいでモデルを選ぶ | Model Garden
+| モデルのバージョンとデプロイを管理する | Model Registry
+| 本番モデルのドリフトを監視する | Model Monitoring
+| 学習・推論を高速化する | Cloud TPU／GPU
+| コンタクトセンターの応対中を支援する | Agent Assist
+| コンタクトセンターの会話を事後分析する | Conversational Insights
+| プレゼン動画をブラウザだけで作る | Google Vids
+| 外部 SaaS とデータ連携する | Application Integration
+|===

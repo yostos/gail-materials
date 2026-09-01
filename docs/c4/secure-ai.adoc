@@ -1,0 +1,94 @@
+= セキュアAI
+include::../_attributes.adoc[]
+
+[cols="1,2,2", options="header"]
+|===
+| ML ライフサイクルの段階 | 主なリスク | 対策
+
+| データ取り込み・準備 | 機密情報の混入、データ汚染 | Sensitive Data Protection、IAM
+| モデル学習 | 学習データの持ち出し | VPC Service Controls
+| 保存 | 保存データの暗号化と鍵の統制 | Cloud KMS（CMEK）
+| デプロイ・推論 | 不正呼び出し、プロンプトインジェクション | IAM、安全性設定、入力検証
+| 運用 | 設定不備、脅威の見落とし | Security Command Center、ワークロード監視
+|===
+
+- AI システムを攻撃と誤用から守る観点。公式試験ガイドでは責任あるAIとは別立ての節。
+
+== Secure AI Framework（SAIF）
+
+[cols="1,3", options="header"]
+|===
+| 要素 | 中身
+
+| 基盤の拡張 | 既存のセキュリティ基盤を AI エコシステムへ広げる
+| 検知と対応の拡張 | AI を組織の脅威対象に含める
+| 防御の自動化 | 新旧の脅威に追随する速度を保つ
+| 統制の統一 | プラットフォーム単位で一貫した統制を敷く
+| 統制の適応 | 緩和策を調整し、フィードバックを速く回す
+| リスクの文脈化 | AI のリスクを周辺の業務プロセスの中で捉える
+|===
+
+出典: link:https://safety.google/safety/saif/[SAIF の概要]、link:https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/security[AI/ML のセキュリティ設計原則]
+
+== セキュリティツール
+
+[cols="1,1", options="header"]
+|===
+| ツール | 役割
+
+| セキュアバイデザインのインフラ | Google Cloud の基盤側で担保される防御
+| IAM | 誰にどの操作を許すか
+| Security Command Center | 設定不備・脆弱性・脅威の一元検出
+| ワークロード監視 | 実行環境の異常検知
+|===
+
+出典: link:https://docs.cloud.google.com/security-command-center/docs/security-command-center-overview[Security Command Center の概要]、link:https://docs.cloud.google.com/iam/docs/overview[IAM の概要]、link:https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml/security[AI/ML のセキュリティ設計原則]
+
+[#data-protection-layers]
+== データ保護の層と役割分担
+
+[cols="1,1,5", options="header"]
+|===
+| 対策 | 守る対象 | 学習リスクへの効果
+
+| Sensitive Data Protection | データの中身 | 匿名化してから学習させられる
+| IAM | アクセス権限 | 不正・過剰なアクセスは防げるが、データの中身は変えない。権限を持つ学習処理には機密情報がそのまま渡る
+| VPC Service Controls | 境界外への持ち出し | 境界内で完結する学習処理では残る
+| Cloud KMS | 保存時の暗号化と鍵管理 | 復号後のデータに含まれる機密情報は残る
+|===
+
+- 「学習データに機密情報が含まれるリスク」を下げられるのは、データの中身そのものを変える手段だけ。
+- Cloud Armor（WAF・DDoS 対策）と Cloud CDN（コンテンツ配信）はアプリの前段を扱う製品で、学習データの保護にも説明可能性にも関与しない。
+
+[cols="1,5,3", options="header"]
+|===
+| 手法 | 中身 | 元に戻せるか
+
+| 匿名化 | マスキング、削除、汎化により個人を特定できなくする | 戻せない
+| 仮名化 | 識別子をトークンや別 ID に置き換える | 対応表があれば戻せる
+|===
+
+- Sensitive Data Protection は、組み込みの `infoType` 検出器やカスタム `infoType` で PII や機微属性を検出してから変換を適用する。
+- 分析で同一人物の名寄せが要るなら仮名化、要らないなら匿名化。
+- 学習の前段でデータ自体から機密情報を落とすので、アクセス制御や境界防御より手前で効く。
+- 匿名化とアクセス制御は排他ではなく併用する。例: 診療記録（氏名・患者 ID・電話番号・住所・診断内容）を Sensitive Data Protection でマスキングし、保存先の Cloud Storage バケットは IAM で最小権限に絞る。
+- ML の初期開発フェーズでは、モデル性能より先にデータ漏洩と過剰アクセスの防止が優先される。
+
+出典: link:https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview[Sensitive Data Protection の概要]、link:https://docs.cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data[機密データの匿名化]、link:https://docs.cloud.google.com/vpc-service-controls/docs/overview[VPC Service Controls の概要]、link:https://docs.cloud.google.com/kms/docs/cmek[CMEK の概要]
+
+== 権限の最小化
+
+[cols="2,1", options="header"]
+|===
+| 権限 | 許可される操作
+
+| `aiplatform.endpoints.predict` | 推論エンドポイントの呼び出し
+| `aiplatform.endpoints.get` / `aiplatform.endpoints.list` | エンドポイントの参照
+| `aiplatform.models.get` / `aiplatform.models.list` | モデルの参照
+|===
+
+- <<data-protection-layers>> の表で IAM が学習データの匿名化に効かないのは、IAM が制御するのがアクセスであってデータの中身ではないため。要件が「誰にどの操作を許すか」なら IAM が正解。
+- IAM は、ユーザー・グループ・サービスアカウントといったプリンシパルへロールを付与し、ロールに含まれる権限で操作を制御する。
+- 定義済みロールとカスタムロールを設計すれば、モデル閲覧・エンドポイント呼び出し・管理操作を役割別に最小権限で分離できる（例: 開発者には推論呼び出し、監査担当には参照のみ）。
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/general/iam-permissions[Vertex AI の IAM 権限一覧]、link:https://docs.cloud.google.com/iam/docs/roles-overview[ロールと権限]

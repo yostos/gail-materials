@@ -1,0 +1,72 @@
+= この試験について
+include::../_attributes.adoc[]
+
+== 認定の位置づけ
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| 対象領域 | 戦略的なリーダーシップと影響力。技術的な実装ではない
+| 求められること | 技術／非技術の双方と会話できる、業務機能と業界をまたいでユースケースを見つける、責任ある AI 導入へ組織を導く
+| 製品知識の深さ | ビジネスレベル。設定手順やコードは問われない
+| 前提 | 生成AIの概念と技術の理解は必要
+| 受験者像 | 実務経験・前提資格とも不要。職種を問わない
+|===
+
+出典: link:https://cloud.google.com/learn/certification/generative-ai-leader[認定ページ]、link:https://services.google.com/fh/files/misc/generative_ai_leader_exam_guide_english.pdf[公式試験ガイド]
+
+== 試験概要
+
+[cols="1,5", options="header"]
+|===
+| 項目 | 内容
+
+| 出題数 | 50〜60問（多肢選択式）
+| 試験時間 | 90分
+| 受験料 | 99 USD（税別）
+| 言語 | 英語、日本語、スペイン語、ポルトガル語
+| 実施形式 | オンライン監督 または テストセンター
+| 前提条件 | なし
+| 有効期間 | 3年
+|===
+
+出典: link:https://cloud.google.com/learn/certification/generative-ai-leader[認定ページ]、link:https://services.google.com/fh/files/misc/generative_ai_leader_exam_guide_english.pdf[公式試験ガイド]（2026-08-27 確認）
+
+== 出題範囲とこのノートの対応
+
+[cols="5,1,5", options="header"]
+|===
+| 公式セクション | 配点 | 本ノート
+
+| 1. Fundamentals of gen AI | 約30% | 1章 生成AIの基礎
+| 2. Google Cloud's gen AI offerings | 約35% | 2章 Google Cloud の生成AI製品
+| 3. Techniques to improve gen AI model output | 約20% | 3章 出力の改善技法
+| 4. Business strategies for a successful gen AI solution | 約15% | 4章 ビジネス戦略と責任あるAI
+|===
+
+- 2章＋1章で65%。製品の位置づけを要件から引けるかが得点の中心。
+
+出典: link:https://services.google.com/fh/files/misc/generative_ai_leader_exam_guide_english.pdf[公式試験ガイド]、link:https://cloud.google.com/learn/certification/generative-ai-leader[認定ページ]
+
+[#product-naming]
+== 製品名の新旧
+
+[cols="2,2,1,1", options="header"]
+|===
+| 旧称 | 現行の名称 | 公式模擬試験の表記 | 本ノートの表記
+
+| Vertex AI（Vertex AI Platform） | Gemini Enterprise Agent Platform | **旧称** | 旧称
+| Vertex AI Search | Agent Search | **旧称** | 旧称
+| Vertex AI Agent Builder | Gemini Enterprise Agent Platform | 出題なし | 旧称
+| Dialogflow CX | Conversational Agents | **現行名** | 現行名
+| Customer Experience Insights | Conversational Insights | 出題なし | 現行名
+| NotebookLM | Gemini Notebook | **両方が混在** | 両方を併記
+|===
+
+- 公式模擬試験（2026-08-27 確認）は Vertex AI 系を**旧称のまま**使う。試験ガイドの現行名とずれている。
+- 本ノートは模擬試験の表記に合わせる。上の表で読み替える。
+- Gemini Enterprise、Conversational Agents、Contact Center as a Service は新旧の問題がない。
+- Gemini Notebook は選択肢のラベル、NotebookLM は解説文中の表記。模擬試験内で同一のものを指す。
+
+出典: link:https://cloud.google.com/products/gemini-enterprise-agent-platform[Gemini Enterprise Agent Platform（旧 Vertex AI）]、link:https://cloud.google.com/products/gemini-enterprise-agent-platform/agent-search[Agent Search]、link:https://docs.cloud.google.com/gemini/enterprise/docs[Gemini Enterprise の概要]

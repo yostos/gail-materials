@@ -1,0 +1,40 @@
+= データ基盤
+include::../_attributes.adoc[]
+
+[#data-types]
+== データの種別
+
+[cols="1,4,2", options="header"]
+|===
+| 種別 | 特徴 | 例
+
+| 構造化データ | 行・列・データ型が明確なテーブル形式 | 顧客マスタ、売上明細
+| 半構造化データ | JSON や XML のように柔軟な階層構造を持つ | API レスポンス、設定ファイル
+| 非構造化データ | 自然言語・画像・音声など、固定スキーマに収まりにくい | チャット本文、PDF、通話録音
+| 時系列データ | 時刻順に並ぶ測定値やイベント値 | センサー値、アクセスログ
+|===
+
+- 判定は「本文が何か」で行う。
+- チャット履歴は、保存形式が JSON でもメタデータ（送信時刻、ユーザー ID）が付いていても、本文が自由記述の自然文なので非構造化データ。
+- 非構造化データから意味を取り出すには、自然言語処理・テキスト分類・エンティティ抽出・埋め込み生成が要る。
+- ファインチューニング用データセットとして扱っても、元データの性質は変わらない。
+
+出典: link:https://cloud.google.com/discover/unstructured-data[非構造化データとは]、link:https://docs.cloud.google.com/bigquery/docs/json-data[BigQuery の JSON データ]
+
+== 収集・保存サービスの分離
+
+[cols="3,1,5", options="header"]
+|===
+| データの性質 | サービス | 理由
+
+| リアルタイムに発生するイベント | Pub/Sub | トピック・パブリッシャー・サブスクライバーの構成で、生成側と処理側を疎結合にしたまま非同期に取り込める
+| 任意形式のファイル（画像、動画、文書） | Cloud Storage | バケットとオブジェクトとして保存する
+| リレーショナルなマスタデータ | Cloud SQL | MySQL・PostgreSQL・SQL Server のフルマネージド提供。参照整合性や更新履歴を扱える
+| グローバル規模のリレーショナルデータ | Cloud Spanner | 分散構成で強い整合性とスケールを両立する
+|===
+
+- データの種類に応じて場所を分ける。1つのサービスにまとめる選択肢は外れる。
+- 典型例: 店舗 POS の在庫・販売イベント → Pub/Sub、製品カタログの画像 → Cloud Storage、顧客マスタ → Cloud SQL。
+- 受けたデータは後段で Dataflow・BigQuery・Vertex AI へ連携し、分析用・学習用にする。
+
+出典: link:https://docs.cloud.google.com/pubsub/docs/overview[Pub/Sub の概要]、link:https://docs.cloud.google.com/storage/docs/introduction[Cloud Storage の概要]、link:https://docs.cloud.google.com/sql/docs/introduction[Cloud SQL の概要]

@@ -1,0 +1,49 @@
+= 用途別 AI API
+include::../_attributes.adoc[]
+
+[cols="1,2", options="header"]
+|===
+| API | できること
+
+| Cloud Natural Language API | エンティティ分析、感情分析、構文解析
+| Cloud Vision API | 画像内のテキストやラベルの検出
+| Cloud Speech-to-Text | 音声のテキスト変換（Chirp モデルを使う）
+| Cloud Text-to-Speech | テキストの音声合成
+| Cloud Translation API | テキストの翻訳
+| Document Translation API | 書式を保ったままの文書翻訳
+| Cloud Video Intelligence API | 動画内の物体・シーン・アクションの検出
+| Document AI | 帳票の OCR、エンティティ抽出、構造化データ化
+|===
+
+- 生成AI以前からある、決まったタスク向けのサービス。生成や要約はできない。
+- ただし「決まった項目を高精度に取り出す」要件では、生成AIより素直な答えになる。
+
+== Document AI
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| 対象 | PDF・画像・スキャン文書などの非構造化／半構造化ドキュメント（請求書、領収書、契約書、フォーム）
+| 抽出するもの | テキスト、レイアウト、フィールド、エンティティ
+| 仕組み | OCR とエンティティ抽出を組み合わせたプロセッサ
+| 汎用プロセッサ | Enterprise Document OCR（API 上は `OCR_PROCESSOR` などのプロセッサ種別）
+| 専用パーサー | 請求書は `INVOICE_PROCESSOR`（Invoice パーサー）
+| 標準で足りない場合 | カスタムエクストラクタで必要なフィールドを定義
+|===
+
+- 取り出す業務項目の例: 金額、品目、日付、取引先名。
+- 多様な形式の帳票を人手入力から自動処理へ移せる。ヒューマンエラー・入力待ち・運用コストを同時に減らせる。
+
+外れる選択肢。
+
+[cols="1,4", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Cloud Vision API | 文字認識まではできるが、業務項目として構造化する用途には足りない
+| Cloud Data Fusion | データ統合パイプラインの作成。帳票から項目を抜く AI 機能ではない
+| Vertex AI Search | 文書の検索と回答生成。項目抽出と社内システムへの登録の自動化ではない
+|===
+
+出典: link:https://docs.cloud.google.com/document-ai/docs/overview[Document AI の概要]、link:https://docs.cloud.google.com/document-ai/docs/processors-list[プロセッサ一覧]、link:https://docs.cloud.google.com/document-ai/docs/enterprise-document-ocr[Enterprise Document OCR]

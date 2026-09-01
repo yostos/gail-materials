@@ -1,0 +1,37 @@
+= データの品質とラベル
+include::../_attributes.adoc[]
+
+== ラベルの有無
+
+[cols="1,2,2", options="header"]
+|===
+| 種別 | 中身 | 使う学習
+
+| ラベル付きデータ | 入力に正解が付与されている | 教師あり学習
+| ラベルなしデータ | タグやラベルが付いていない | 教師なし学習
+| 元データ（生データ） | 使うための処理も形式設定もされていない | 加工前。通常は前処理と品質確認を経て使う
+|===
+
+- ラベル付けはコストが高い。少量のラベル＋大量のラベルなしなら半教師あり学習。
+- 「人手で確認してカテゴリをタグ付けした」→ 元データからラベル付きデータへ変換済み。ラベルなしでも元データでもない。
+- ラベルの有無と構造化の有無は別の軸。メールにカテゴリを付けても、本文は非構造化データのまま（<<data-types>>）。
+
+出典: link:https://developers.google.com/machine-learning/intro-to-ml/supervised[教師あり学習とラベル]、link:https://developers.google.com/machine-learning/glossary/fundamentals[ML 用語集（基礎）]
+
+== データ品質の観点
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 崩れると起きること
+
+| 完全性 | 欠損により学習・推論が偏る
+| 一貫性 | 表記や単位のゆれで同一物を別物として扱う
+| 関連性 | 課題と無関係な特徴量が判断に混入する
+| 可用性 | 必要なときにデータへ到達できない
+| コスト | 収集・保存・整備の負担が投資対効果を割る
+| 形式 | 想定外の形式で前処理が破綻する
+|===
+
+- 品質はモデル性能の上限を決める。データ依存性（<<data-dependency>>）の裏返し。
+
+出典: link:https://developers.google.com/machine-learning/crash-course/numerical-data/scrubbing[データのスクラビング]、link:https://docs.cloud.google.com/dataplex/docs/auto-data-quality-overview[自動データ品質の概要]

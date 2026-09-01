@@ -1,0 +1,48 @@
+= エンドユーザー向けツール
+include::../_attributes.adoc[]
+
+[cols="1,2", options="header"]
+|===
+| 製品 | できること
+
+| Gemini アプリ | 汎用の対話。文章生成、要約、調べもの
+| Gemini Advanced | 上位モデルと拡張機能。Gems（用途別に指示を固定したカスタムアシスタント）
+| Gemini for Workspace | Docs・Sheets・Slides・Gmail 内での文章生成、要約、返信作成
+| Google Vids | ブラウザ上でのプレゼンテーション形式の動画作成
+| NotebookLM（Gemini Notebook） | 追加したソースに基づく要約、抽出、比較、質問応答
+|===
+
+選び分けの軸。
+
+[cols="2,1,2", options="header"]
+|===
+| 要件 | 選ぶもの | 理由
+
+| 設定なしで複数案を素早く出す（ブレスト、初稿） | Gemini アプリ | プロンプトを打つだけ。探索段階に最も速い
+| 役割・トーン・参照情報を固定して繰り返し使う | Gems（Gemini Advanced） | 一貫性は出るが設定が要る。初期探索には過剰
+| アップロード済み文書を分析して分析情報を整理する | NotebookLM | ソースにグラウンディングされ、引用元を確認できる
+| 既存の文書・メール・スライドの中で書く、直す、要約する | Gemini for Workspace | アプリ内の作業を強化する。ゼロからの大量生成は不得手
+|===
+
+- 開発を伴わずに担当者がそのまま使える層。
+- Gemini for Workspace は模擬試験では「Gemini for Google Workspace」「Google Workspace with Gemini」の両表記で出る。同じものを指す。
+- Gems は役割・トーン・参照情報を固定した使い回し用の設定。ロールプロンプティング（<<role-prompting>>）を UI で保存したもの。
+- Google Vids は AI アバター（シーンに挿入してスクリプトをナレーションさせる）と AI ナレーション（テキストから音声を生成）を標準機能で持つ。
+- 「バーチャルプレゼンターの短い動画を、外部制作会社も専用環境の予算もなしに至急作りたい」→ Google Vids。撮影・録音・レンダリング基盤・動画生成モデルの独自デプロイがすべて不要。
+
+== NotebookLM（Gemini Notebook）
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| ソース | PDF、Google ドキュメント、Google スライド、ウェブサイト URL
+| できること | ソースに基づく要約、抽出、比較、質問応答、分析情報のメモ保存
+| 特徴 | 回答がソースにグラウンディングされ、根拠となる引用箇所を確認できる
+| 企業向け | NotebookLM Enterprise
+|===
+
+- 向く要件: 複数の長文 PDF を横断して比較・抽出し、参照元も確認したい（例: 契約書や判例データから免責条項・損害賠償条件を取り出す）。
+- Vertex AI Search を自分で構成する場合との違いは、独自アプリの開発もベクトルデータベースの設計も要らないこと。
+
+出典: link:https://notebook.google/[NotebookLM 製品ページ]、link:https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/overview[NotebookLM Enterprise の概要]

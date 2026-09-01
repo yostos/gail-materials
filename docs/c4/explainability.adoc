@@ -1,0 +1,46 @@
+= 説明可能性の実装
+include::../_attributes.adoc[]
+
+[cols="1,1", options="header"]
+|===
+| 見たいこと | 使う機能
+
+| 個々の予測がなぜその結果になったか | Vertex Explainable AI
+| モデル全体の性能や属性による不公平な傾向 | Vertex AI Model Evaluation
+| 本番環境での入力分布の変化 | Vertex AI Model Monitoring（スキューとドリフトの検出）
+|===
+
+Vertex Explainable AI。
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| 提供するもの | 特徴アトリビューション（各入力特徴量が推論結果にどの程度影響したか）、例に基づく説明
+| 特徴ベースの方式 | Sampled Shapley、Integrated gradients、XRAI
+| 表形式モデル | シャープレイ値をベースに算出
+| 他の実装 | BigQuery ML の特徴量ベースの説明
+|===
+
+- 説明可能性は、自動化された意思決定の判断根拠を監査および検証可能にする原則。
+- 見抜き方のキーワード: 「なぜその判断になったか」「特徴量の影響」「説明可能性」。
+- 例: 採用モデルで特定の経歴の候補者が一律に不採用 → 学歴・職歴・空白期間・前職種のどれが不採用判断に強く寄与しているかを確認する。
+- 可視化の先にあるもの: 人間によるレビュー、特徴量設計の見直し、トレーニングデータのバイアス検出。
+
+外れる選択肢。
+
+[cols="1,2", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Cloud KMS | 暗号化キー管理。論点が違う
+| Cloud Load Balancing | 負荷分散。論点が違う
+| 追加のトレーニングデータ投入 | 既存の傾向をかえって再現しうる。公平性確保の直接の答えにならない
+| より大規模で多様なデータセットの収集 | 精度とバイアスは改善しうるが、選考プロセスが透明になるわけではない
+| 公平性評価の開発 | 属性ごとの偏りは特定できるが、個々の判断の根拠は説明しない
+| ファインチューニング | タスク固有の性能向上が目的。判断根拠は不透明なまま
+|===
+
+- 「なぜこの人が落ちたのか説明できない」→ 説明可能性。「特定の属性が一律に不利になっている」→ 公平性。設問がどちらを問うかで答えが入れ替わる。
+
+出典: link:https://docs.cloud.google.com/vertex-ai/docs/explainable-ai/overview[Vertex Explainable AI の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/evaluation/introduction[モデル評価の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-monitoring/overview[Model Monitoring の概要]

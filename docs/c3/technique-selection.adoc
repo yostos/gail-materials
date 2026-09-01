@@ -1,0 +1,17 @@
+= 手法の選び分け
+include::../_attributes.adoc[]
+
+[cols="3,2,5,1", options="header"]
+|===
+| 手法 | 重みを変えるか | 解決すること | 相対コスト
+
+| プロンプト設計 | 変えない | 出力の形式・粒度・思考手順を整える | 最小
+| グラウンディング／RAG | 変えない | 学習時点にない情報、社内固有の情報、根拠の提示 | 小
+| ファインチューニング | 追加学習で変える | 語調・専門用語・出力形式やモデルの応答傾向そのものを安定させる | 中
+| 事前学習（再トレーニング） | 一から作る | 独自モデルがどうしても要る例外的な場合 | 最大
+|===
+
+- 原則は、要件に対して最も軽い段で解けるものを選ぶこと。
+- 情報の鮮度は上から2段目で解く。再トレーニングはコストが釣り合わず、更新のたびに学習し直すことになるので成立しない。
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tuning[チューニングとプロンプト設計の比較]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/prompts/prompt-design-strategies[プロンプト設計戦略]

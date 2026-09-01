@@ -1,0 +1,13 @@
+= まぎらわしい隣接概念
+include::../_attributes.adoc[]
+
+[cols="1,4,2", options="header"]
+|===
+| 概念 | 実際の位置づけ | 外し方
+
+| 深層学習 | ニューラルネットワークで特徴を学習する実装技術。教師あり・教師なし・強化学習のいずれの内部でも使える | 学習タイプの分類としては広すぎる
+| 転移学習 | 既存モデルの知識を別タスクへ再利用する手法 | 評価に基づく試行錯誤で方策を改善する話ではない
+| ルールベースの運用自動化 | Cloud Monitoring のアラートポリシー、自動スケーリング | メトリクスとしきい値で動き、学習を伴わない
+|===
+
+出典: link:https://cloud.google.com/discover/what-is-deep-learning[深層学習とは]、link:https://docs.cloud.google.com/monitoring/alerts[アラートポリシーの概要]

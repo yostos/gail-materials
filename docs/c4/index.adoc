@@ -1,0 +1,10 @@
+= ビジネス戦略と責任あるAI
+include::../_attributes.adoc[]
+
+include::adoption-strategy.adoc[leveloffset=+1]
+
+include::responsible-ai.adoc[leveloffset=+1]
+
+include::explainability.adoc[leveloffset=+1]
+
+include::secure-ai.adoc[leveloffset=+1]

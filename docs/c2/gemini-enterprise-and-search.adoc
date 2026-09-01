@@ -1,0 +1,107 @@
+= Gemini Enterprise と Vertex AI Search
+include::../_attributes.adoc[]
+
+[cols="1,4", options="header"]
+|===
+| 製品 | 位置づけ
+
+| Gemini Enterprise | 社内の複数データソースに接続し、企業内情報を検索結果・生成回答・アクション・エージェントとして提供する
+| Vertex AI Agent Builder | エージェントや検索アプリを構築するための統合的な生成AIアプリケーション基盤
+| Vertex AI Search | ウェブサイト・構造化データ・非構造化データを対象にした構築済みのエンタープライズ検索と RAG
+|===
+
+4製品が同じ選択肢に並んだときの切り分け。
+
+[cols="1,2,3", options="header"]
+|===
+| 製品 | 誰のためか | 何を提供するか
+
+| Gemini Enterprise | 社内の従業員・ナレッジワーカー | 社内システム横断のデータにアクセスするカスタムエージェント
+| Conversational Agents | 社外の顧客 | 問い合わせに自動応答するチャットボット
+| Vertex AI Search | アプリの開発者 | アプリへ組み込む検索機能。検索そのものが成果物
+| Vertex AI | ML エンジニア・データサイエンティスト | ML ライフサイクル全体を管理する基盤
+|===
+
+- 「従業員が社内システムを横断して情報を探す」→ Gemini Enterprise。Vertex AI Search でも検索はできるが、先回りの分析情報提供とタスク自動化まではできない。
+
+Gemini Enterprise。
+
+- 対象は製品仕様書・障害レポート・メンテナンスマニュアルのような非構造化文書。
+- 組み合わせられるもの: 対話型インターフェース、生成AIによる回答、文書の要約や分析、業務タスクの実行支援。
+- 対応する要件: 現場担当者が社内文書を横断検索し、必要な知識を引き出して報告作業を効率化したい。
+
+Vertex AI Agent Builder。
+
+- 対応する要件: コーディング不要で文書の要約や質疑応答を行う仕組みを構築したい。
+- 構成: 社内ドキュメントをデータストア化し、Vertex AI Search のセマンティック検索・生成AIによる回答・要約を組み合わせる。
+- 取り込み元: Cloud Storage、BigQuery、Google Drive。
+- 独自の検索インデックス・RAG パイプライン・要約アプリを一から開発せずに済む。高度なプログラミング人材がいない制約に合う。
+
+Vertex AI Search。
+
+[cols="1,1", options="header"]
+|===
+| 構成要素 | 役割
+
+| 非構造化データストア | PDF・DOCX・HTML などの文書を取り込む先
+| セマンティック検索・自然言語理解 | キーワード一致ではなく意味で引く
+| 検索ウィジェット | イントラネットなど既存画面への組み込み
+| Discovery Engine API | アプリケーションからの検索呼び出し
+|===
+
+- 数十万件の訴訟記録や社内規定 PDF が複数の保管場所に分散していても、マネージド機能で揃うため専任の機械学習エンジニアなしに構築できる。
+
+外れる選択肢。
+
+[cols="1,2", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Conversational Agents（旧 Dialogflow CX） | FAQ 応答と会話フローの設計。文書横断検索の中核ではない
+| Document AI ＋ BigQuery | 項目抽出と集計。検索・対話・要約の仕組みを別途作ることになる
+| Cloud Natural Language API | 感情・エンティティ・構文の分析。検索インデックスも検索 UI も提供しない
+| Gemini API ＋ 外部フレームワーク | 柔軟だが RAG や検索基盤を自前実装する負荷が高い
+| Vertex AI AutoML | 分類・予測のモデル学習。用途が違う
+| 独自の検索システム | 構築済みソリューションが合う場面では実装・運用負荷が過剰
+|===
+
+== エージェントのツール
+
+[cols="2,3,1", options="header"]
+|===
+| ツール | 中身 | 実行する側
+
+| Extensions | 事前構築された外部 API への接続 | エージェント
+| Functions（関数呼び出し） | 呼ぶ関数と引数をモデルが決める | アプリケーション
+| Data stores | 文書・データへのアクセス。RAG の根拠に使う | エージェント
+| Plugins | 外部サービスとの連携 | エージェント
+|===
+
+- 実行主体が問われたら、Extensions はエージェント側、Functions はアプリ側。
+- Functions は**判断がモデル、実行がアプリ**。モデルは関数名と引数を返すだけで、API 呼び出しそのものは行わない。
+
+出典: link:https://docs.cloud.google.com/vertex-ai/generative-ai/docs/extensions/overview[Extensions の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tools/function-calling[関数呼び出しの概要]、link:https://docs.cloud.google.com/dialogflow/cx/docs/concept/data-store[データストア]
+
+== 用途別エージェントの種類
+
+[cols="1,3,1", options="header"]
+|===
+| エージェント | 担当領域 | 選ぶ手がかり
+
+| カスタマーエージェント | 顧客対応、問い合わせ応答 | 社外の顧客が相手
+| 従業員エージェント | 社内情報の検索、業務支援 | 社内の従業員が相手
+| 会話型エージェント | 話を理解し筋の通った応答を返す | **双方向の自然な対話そのもの**が目的
+| 仮想アシスタントエージェント | サポートと情報の提供 | 一方向の案内。対話の自然さは論点でない
+| ワークフローエージェント | タスクの自動化 | 定型処理を流す。対話ではない
+| クリエイティブエージェント | コンテンツ・広告制作 | 制作物が成果
+| データエージェント | データを分析してトレンド・分析情報を特定する | データが対象
+| データ分析エージェント | データ関連タスク全般の支援 | データが対象。コード特化ではない
+| コードエージェント | コードの記述、レビュー、デバッグ、自然言語からのコード生成 | 開発者が相手
+| セキュリティエージェント | アラート内容の要約、脅威インテリジェンスによる調査支援、検出ルールの作成 | SOC が相手
+|===
+
+- 選択肢が似ている場合、**相手が誰か**と**成果が何か**の2点で絞る。
+- VR キャラクターがジェスチャーや表情で自然にやり取りする → 会話型エージェント。クリエイティブエージェントもゲームで使えるが、論点は対話。
+- SOC のアラート調査と検出エンジニアリングの効率化 → セキュリティエージェント。実装は Google Security Operations の Gemini in Security Operations。
+
+出典: link:https://cloud.google.com/discover/what-are-ai-agents[AI エージェントの種類]、link:https://docs.cloud.google.com/chronicle/docs/secops/gemini-secops[Gemini in Google SecOps の概要]

@@ -1,0 +1,19 @@
+= プロンプトを試す場所の選び分け
+include::../_attributes.adoc[]
+
+[cols="1,3,2", options="header"]
+|===
+| ツール | 主な用途 | 重さ
+
+| Google AI Studio | ブラウザ上での Gemini プロンプト作成・実行・パラメータ調整 | 最軽量。インフラもノートブックも不要
+| Vertex AI Studio | Vertex AI プロジェクト内でのプロンプト設計 | Google Cloud プロジェクトの文脈が要る
+| Agent Studio | Vertex AI Agent Builder 上でのエージェント構築・試行 | エージェントを作る場合に使う
+| Model Garden | モデルの探索・比較・デプロイ | 本格利用向け。即時評価には重い
+| Vertex AI Workbench | ノートブックでのコード開発・分析 | 環境構築を省きたい要件には合わない
+|===
+
+- 「インフラもノートブックも作らずにプロンプトと生成パラメータを即座に比較したい」→ Google AI Studio
+- 「Google Cloud プロジェクト内で、エージェントとして組み立てたい」→ Agent Studio
+- 本番デプロイや MLOps 基盤の話が出たら Vertex AI 側へ移る
+
+出典: link:https://ai.google.dev/aistudio[Google AI Studio]、link:https://ai.google.dev/gemini-api/docs/ai-studio-quickstart[Google AI Studio クイックスタート]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio[Agent Studio の概要]

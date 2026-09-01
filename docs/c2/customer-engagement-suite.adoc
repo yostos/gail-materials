@@ -1,0 +1,52 @@
+= Customer Engagement Suite — コンタクトセンター向け
+include::../_attributes.adoc[]
+
+[cols="4,5,1", options="header"]
+|===
+| コンポーネント | 役割 | 時間軸
+
+| Conversational Agents（旧 Dialogflow CX） | インテントと会話フローを設計し、仮想エージェントによる自己解決を実現する | 応対の前（設計）
+| Agent Assist | 応対中のオペレーターへリアルタイムに情報を提示する | 応対中
+| Conversational Insights（旧 Customer Experience Insights） | 会話データを分析し、パターン検出とセンチメント・エンティティ・通話トピックの可視化を行う | 応対の後（分析）
+| Contact Center as a Service | 電話やチャットを扱うコンタクトセンターそのものの運用基盤 | 全体
+|===
+
+[cols="1,1", options="header"]
+|===
+| 要件 | 選ぶもの
+
+| 有人オペレーターへのリアルタイム支援 | Agent Assist
+| 過去データの分析 | Conversational Insights
+| 顧客自身に自己解決させる無人対応 | Conversational Agents
+| 一次対応の自動化と有人支援をまとめて導入 | Contact Center as a Service
+|===
+
+Agent Assist。
+
+- 提示するもの: リアルタイムの応答候補、ナレッジ記事、FAQ 回答、会話要約、次のアクション候補。
+- 代表機能: Smart Reply、Knowledge Assist、Generative Knowledge Assist。
+- 構成: 会話を `Conversation` リソースとして扱い、参加者を `END_USER` と `HUMAN_AGENT` に区別、会話プロファイルで提示候補を制御。
+- ナレッジドキュメントや FAQ をナレッジベースに与えれば、新人オペレーターでも会話文脈に沿った回答手順を参照できる。
+
+Conversational Insights。
+
+- 対応する要件: 過去の通話録音やチャットログから根本原因やトピック傾向を可視化したい（品質保証チーム）。
+- 通話録音は Speech-to-Text で文字起こしされ、チャットの文字起こしとあわせて分析対象になる。
+- 確認できること: エスカレーション増加の背景にある問い合わせカテゴリ、顧客不満の傾向、改善すべき運用領域。
+
+Contact Center as a Service。
+
+- 統合するもの: 仮想エージェントによる一次対応、有人エージェントへのエスカレーション、会話内容に基づく支援。
+- Virtual agents は Dialogflow または Gemini Enterprise for Customer Engagement を基盤に問い合わせを自動処理する。
+
+外れる選択肢。
+
+[cols="1,2", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Cloud Speech-to-Text | 音声をテキストに変換するだけ。回答手順の提示は担わない
+| Cloud Natural Language API | 汎用の NLP。この製品群のコンポーネントではない
+|===
+
+出典: link:https://cloud.google.com/gemini-enterprise-cx[コンタクトセンター向け製品群]、link:https://docs.cloud.google.com/gemini-enterprise-cx/agent-assist/basics[Agent Assist の基礎]、link:https://docs.cloud.google.com/gemini-enterprise-cx/insights[Customer Experience Insights]、link:https://docs.cloud.google.com/contact-center/ccai-platform/docs[Contact Center as a Service]

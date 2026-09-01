@@ -1,0 +1,27 @@
+= Google Generative AI Leader 認定試験対策資料
+吉田敏幸 <yostos@yostos.org>
+:description: Google Cloud Generative AI Leader 認定試験の対策ノート。生成AIの基礎、Google Cloud の製品群、出力の改善技法、ビジネス戦略と責任あるAI を、要件から製品・技法を引ける形にまとめる。
+include::_attributes.adoc[]
+:revnumber: 0.1.0
+:revdate: 2026-08-27
+:version-label: Revision
+
+[preface]
+include::disclaimer.adoc[leveloffset=+1]
+
+[preface]
+include::c0/index.adoc[leveloffset=+1]
+
+include::c1/index.adoc[leveloffset=+1]
+
+include::c2/index.adoc[leveloffset=+1]
+
+include::c3/index.adoc[leveloffset=+1]
+
+include::c4/index.adoc[leveloffset=+1]
+
+[appendix]
+include::appendix/usecase-lookup.adoc[leveloffset=+1]
+
+[appendix]
+include::appendix/gcp-aws-mapping.adoc[leveloffset=+1]

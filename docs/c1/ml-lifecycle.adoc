@@ -1,0 +1,15 @@
+= ML ライフサイクル
+include::../_attributes.adoc[]
+
+[cols="1,2,3", options="header"]
+|===
+| 段階 | すること | Google Cloud のツール
+
+| データ取り込み | 発生源からデータを集める | Pub/Sub、Cloud Storage、BigQuery
+| データ準備 | 整形、特徴量化、分割 | Dataflow、BigQuery、Dataset、Feature Store
+| モデル学習 | 学習と評価 | AutoML、カスタムトレーニング、TPU／GPU
+| モデルデプロイ | 推論できる状態にする | Model Registry、Endpoint
+| モデル管理 | 監視、更新、再学習 | Model Monitoring、Model Evaluation、Pipelines
+|===
+
+出典: link:https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning[MLOps のパイプライン]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-registry/introduction[Model Registry の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-monitoring/overview[Model Monitoring の概要]

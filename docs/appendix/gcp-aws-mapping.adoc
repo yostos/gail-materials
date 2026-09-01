@@ -1,0 +1,63 @@
+= GCP↔AWS 対比表
+include::../_attributes.adoc[]
+
+[cols="1,2,1", options="header"]
+|===
+| GCP | AWS 相当 | 一言の違い
+
+| TPU | AWS Trainium／Inferentia | 各社の自社製 ML 専用アクセラレータ
+| Gemini | Amazon Nova | 各社の自社製 高性能モデル
+| Gemma | 相当なし | AWS は自社オープンウェイトモデルを持たない
+| Chirp | Amazon Transcribe | Chirp はモデル名、Transcribe はサービス名
+| Vertex AI | Amazon Bedrock ＋ SageMaker AI | GCP は1製品に集約、AWS はモデルAPIとML基盤が別
+| Gemini API | Bedrock の InvokeModel／Converse | モデルの直接呼び出し
+| Google AI Studio | PartyRock／Bedrock Playground | ブラウザだけで試せる軽量な試作環境
+| Vertex AI Studio | Bedrock Playground | プロジェクト内でのプロンプト試行
+| Model Garden | Bedrock のモデルカタログ | 利用可能なモデルの一覧
+| AutoML | SageMaker Autopilot | 自動でのモデル学習
+| Model Registry | SageMaker Model Registry | 学習済みモデルのバージョン管理
+| Vertex AI Feature Store | SageMaker Feature Store | 特徴量の管理と提供
+| Artifact Registry | Amazon ECR ＋ CodeArtifact | コンテナイメージとパッケージの管理
+| Vertex AI Endpoint | SageMaker Endpoint | 推論エンドポイント
+| Vertex AI Workbench | SageMaker Studio のノートブック | マネージドノートブック環境
+| Vertex AI RAG Engine | Bedrock Knowledge Bases | RAG パイプラインの構成
+| Vertex Explainable AI | SageMaker Clarify | Clarify はバイアス検出も同一機能
+| Vertex AI Pipelines | SageMaker Pipelines | ML ワークフロー自動化
+| Vertex AI Model Monitoring | SageMaker Model Monitor | 本番モデルのドリフト監視
+| Application Integration | Amazon AppFlow ＋ EventBridge | SaaS・DB・イベントの連携基盤
+| Agent Development Kit | Strands Agents SDK | コードでエージェントを実装
+| Managed Agents API | Bedrock Agents | エージェント実行のマネージド提供
+| Gemini Code Assist | Amazon Q Developer | IDE でのコード生成・テスト生成・最適化提案
+| Gemini in BigQuery | Amazon Q generative SQL（Redshift） | 分析基盤に組み込まれた SQL 生成支援
+| Gemini Enterprise | Amazon Q Business | 社内データに横断アクセスする業務向けアシスタント
+| Vertex AI Search | Amazon Kendra／Bedrock Knowledge Bases | GCP は検索から回答生成まで一体
+| Conversational Agents（旧 Dialogflow CX） | Amazon Lex | 会話エージェント構築
+| Gemini in Security Operations | Amazon Q（Security Hub との統合） | SOC 業務の自然言語支援。対応関係は完全には一致しない
+| Gemini for Workspace | 相当なし | AWS はオフィススイートを持たない
+| Google Vids | 相当なし | AWS に動画作成アプリはない
+| Cloud Natural Language API | Amazon Comprehend | 従来型 NLP（エンティティ・感情・構文）
+| Cloud Vision API | Amazon Rekognition | 画像のテキスト・ラベル検出
+| Cloud Video Intelligence API | Amazon Rekognition Video | 動画の物体・シーン検出
+| Cloud Text-to-Speech | Amazon Polly | 音声合成
+| Cloud Translation API | Amazon Translate | 翻訳
+| Security Command Center | AWS Security Hub ＋ GuardDuty | 設定不備・脅威の一元検出
+| Secure AI Framework（SAIF） | 明確な相当なし | AI セキュリティの枠組み
+| NotebookLM | 相当なし | 引用付きのソース限定リサーチ
+| Customer Engagement Suite | Amazon Connect ＋ Contact Lens | コンタクトセンター基盤と会話分析
+| Conversational Insights | Contact Lens for Amazon Connect | 通話・チャットの事後分析
+| Pub/Sub | Amazon SNS ＋ SQS／Kinesis | 非同期メッセージングとイベント取り込み
+| Cloud Storage | Amazon S3 | オブジェクトストレージ
+| Cloud SQL | Amazon RDS | マネージドリレーショナルデータベース
+| Cloud Spanner | Amazon Aurora DSQL | 分散リレーショナルデータベース
+| BigQuery | Amazon Redshift／Athena | 大規模データ分析
+| Dataflow | AWS Glue／Amazon Kinesis Data Analytics | ストリーム・バッチのデータ処理
+| Document AI | Amazon Textract | 文書からの項目抽出・構造化
+| Sensitive Data Protection | Amazon Macie／Comprehend の PII 検出 | Macie は検出中心、変換は後段
+| Cloud Monitoring | Amazon CloudWatch | メトリクス監視とアラート
+| IAM | AWS IAM | アクセス権限管理
+| VPC Service Controls | 単一の相当なし（VPCエンドポイントポリシー＋リソースポリシー＋SCP） | GCP は境界を1製品で定義
+| Cloud KMS | AWS KMS | 鍵管理
+| Cloud Armor | AWS WAF ＋ Shield | WAF・DDoS 対策
+| Cloud CDN | Amazon CloudFront | コンテンツ配信
+| Cloud Run | App Runner／ECS Fargate | コンテナのサーバーレス実行
+|===

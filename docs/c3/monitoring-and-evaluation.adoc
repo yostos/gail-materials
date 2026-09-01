@@ -1,0 +1,19 @@
+= 継続的モニタリングと評価
+include::../_attributes.adoc[]
+
+[cols="1,5", options="header"]
+|===
+| 項目 | 中身
+
+| 自動モデルアップグレード | 提供元のモデル更新に追随する
+| KPI | 業務指標で効果を測る
+| セキュリティパッチと更新 | 依存コンポーネントを最新に保つ
+| バージョニング | モデルの版・評価・デプロイ状態を管理する（Model Registry）。プロンプトやアプリ設定の版は別途ソース管理側で持つ
+| パフォーマンス追跡 | 精度・遅延・コストを継続測定する
+| ドリフト監視 | 入力分布と精度の変化を検出する（Model Monitoring）
+| Feature Store | 学習時と推論時で特徴量の整合を保つ
+|===
+
+- 学習時と推論時の特徴量がずれる状態がスキュー、時間経過で入力分布がずれる状態がドリフト。
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-monitoring/overview[Model Monitoring の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/featurestore/latest/overview[Feature Store の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/evaluation-overview[生成 AI 評価サービス]

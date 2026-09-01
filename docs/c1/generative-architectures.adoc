@@ -1,0 +1,19 @@
+= 生成モデルの方式
+include::../_attributes.adoc[]
+
+[cols="2,3,1", options="header"]
+|===
+| 方式 | 生成の仕組み | 主な対象
+
+| 拡散モデル | ランダムノイズから段階的にノイズを除去して復元する | 画像
+| Transformer ベースの大規模言語モデル | 文脈から次のトークンを予測して並べる | テキスト、コード
+|===
+
+拡散モデルの要点。
+
+- 学習時は画像へノイズを加える順方向過程を学ぶ。生成時はその逆方向。
+- 反復的なサンプリングで、ノイズ → 輪郭・構造・質感・色を持つ画像へ変換。
+- Stable Diffusion XL（SDXL）は潜在拡散モデル（LDM）の一種。
+- 設問に「Diffusion Model」「random noise」「denoising」「sampling steps」→ 拡散モデル。
+
+出典: link:https://research.google/blog/high-fidelity-image-generation-using-diffusion-models/[拡散モデルによる画像生成]、link:https://developers.google.com/machine-learning/crash-course/llm/transformers[LLM と Transformer]

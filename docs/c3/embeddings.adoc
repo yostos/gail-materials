@@ -1,0 +1,27 @@
+= エンベディングとマルチモーダル検索
+include::../_attributes.adoc[]
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| 仕組み | テキスト・画像・音声を同じ意味空間のエンベディング（ベクトル）として扱う
+| 効果 | モダリティをまたいで意味的に近いものを検索できる
+| 利用者側の利点 | キーワード一致ではなく意味の近さで引けるので、条件を自然な形で伝えられる
+| 例（不動産） | 間取り図の画像＋音声の希望条件＋テキストで「南向きで収納が多い」「この間取りに似た物件」「駅近でペット可」
+|===
+
+- ビジネス上の利点を問われたら、検索体験が直感的になることで得られる価値を答える。離脱の抑制、閲覧数・問い合わせ数・内見予約の増加を通じた顧客満足度と成約率の向上。
+
+外れる選択肢。
+
+[cols="1,2", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| 自動スケーリング | インフラ容量の調整。検索体験の価値ではない
+| 問い合わせ分析 | サポート履歴の分析。物件検索の主目的ではない
+| 需要予測・動的価格設定 | 価格の最適化。検索入力の多様化とは別
+|===
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/get-multimodal-embeddings[マルチモーダル エンベディング]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/get-text-embeddings[テキスト エンベディング]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/overview[Vector Search]

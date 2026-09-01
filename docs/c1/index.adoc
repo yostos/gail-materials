@@ -1,0 +1,22 @@
+= 生成AIの基礎
+include::../_attributes.adoc[]
+
+include::what-is-genai.adoc[leveloffset=+1]
+
+include::ml-learning-types.adoc[leveloffset=+1]
+
+include::adjacent-concepts.adoc[leveloffset=+1]
+
+include::ml-lifecycle.adoc[leveloffset=+1]
+
+include::data-quality-and-labels.adoc[leveloffset=+1]
+
+include::model-families.adoc[leveloffset=+1]
+
+include::model-selection-criteria.adoc[leveloffset=+1]
+
+include::generative-architectures.adoc[leveloffset=+1]
+
+include::agents.adoc[leveloffset=+1]
+
+include::limitations.adoc[leveloffset=+1]

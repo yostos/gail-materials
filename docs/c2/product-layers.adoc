@@ -1,0 +1,48 @@
+= 製品の層
+include::../_attributes.adoc[]
+
+[cols="1,3,1", options="header"]
+|===
+| 層 | 中身 | 誰が使うか
+
+| インフラ | TPU、GPU | 大規模なモデルを学習させる側
+| データ基盤 | Pub/Sub、Cloud Storage、Cloud SQL、BigQuery | 学習・分析用のデータを集める側
+| モデル | Gemini、Gemma、Imagen、Veo、Chirp | モデルを直接呼ぶ開発者
+| 試作環境 | Google AI Studio | プロンプトを試したい人
+| 開発基盤 | Vertex AI | 生成AIアプリと ML モデルを作る側
+| 組み込みアシスタント | Gemini for Google Cloud | Google Cloud を日常的に触る技術者
+| 業務向け完成品 | Gemini Enterprise、Vertex AI Search、Customer Engagement Suite | 業務システムに組み込む側
+| エンドユーザー向けツール | Gemini for Workspace、Google Vids、NotebookLM | 事務・広報・企画・調査の担当者
+|===
+
+- 要件が「作る」「使う」「試す」のどれかで層が決まる。層が合えば選択肢は1つに絞れることが多い。
+- Google の方針は、生成AIを独立製品として切り出さず、データ分析・アプリ開発・運用・セキュリティ・オフィス業務へ横断的に組み込むこと。「専用モデルだけを閉じて提供している」という趣旨の選択肢は逆なので外れる。
+
+公式試験ガイドの5層との対応。
+
+[cols="1,3", options="header"]
+|===
+| 公式の層 | 上表の層
+
+| Infrastructure | インフラ、データ基盤
+| Models | モデル
+| Platforms | 開発基盤、試作環境
+| Agents | 業務向け完成品
+| Applications | 組み込みアシスタント、エンドユーザー向けツール
+|===
+
+== Google Cloud のアプローチ
+
+[cols="1,5,5", options="header"]
+|===
+| 特性 | 中身 | 対応する要件
+
+| オープン性 | オープンスタンダードを採り、提供元をまたいでサービスを選べる | 単一ベンダーに依存したくない、ベンダーロックインを避けたい
+| AI の民主化 | ローコード／ノーコードツール、事前トレーニング済みモデル、使いやすい API を揃える | 社内に ML の専門知識がない
+|===
+
+- 民主化の具体: Vertex AI AutoML（ローコード／ノーコード）、Model Garden（事前学習済みモデル）、各種 API。
+- 技術レベルに応じてノーコードからフルコード開発まで選べる。「技術的入力が一切不要な完全自動」ではない。
+- 「柔軟性と選択肢を保ちたい」という要件に、独自技術での囲い込み・フルマネージドへの一本化・自動化の推進はいずれも答えにならない。
+
+出典: link:https://cloud.google.com/blog/topics/inside-google-cloud/empowering-customers-and-the-ecosystem-with-an-open-cloud[オープンクラウドの考え方]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-garden/explore-models[Model Garden の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/beginner/beginners-guide[AutoML 初心者ガイド]

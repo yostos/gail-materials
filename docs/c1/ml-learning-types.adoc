@@ -1,0 +1,19 @@
+= 機械学習の学習タイプ
+include::../_attributes.adoc[]
+
+[cols="1,3,3,5", options="header"]
+|===
+| 学習タイプ | 手がかり | 主な目的 | 代表的な手法
+
+| 教師あり学習 | 入力データと正解ラベル | 分類、数値予測 | 回帰、決定木、勾配ブースティング
+| 教師なし学習 | ラベルなしデータの構造 | パターン発見、クラスタリング、異常検出、次元削減 | K-means、階層クラスタリング、Gaussian Mixture Model、主成分分析、オートエンコーダ
+| 半教師あり学習 | 少量の正解ラベルと大量のラベルなしデータ | ラベル付けコストを抑えた分類 | 自己学習、ラベル伝播
+| 強化学習 | 行動に対する報酬とペナルティ | 試行錯誤による方策の改善 | Q学習、SARSA、Deep Q-Network、ポリシーグラディエント法
+|===
+
+- 切り分けは「何を手がかりに学習するか」。
+- 同じアクセスログでも、セグメント抽出（正解ラベルなし）は教師なし、コンバージョン予測（過去の結果がラベル）は教師あり。
+- 強化学習の構成要素はエージェント・環境・行動・報酬・ポリシーの5つ。
+- 変動する環境に適応しながら方策を改善し続ける要件は強化学習（例: 倉庫内ロボットの経路探索）。
+
+出典: link:https://cloud.google.com/discover/what-is-supervised-learning[教師あり学習とは]、link:https://cloud.google.com/discover/what-is-unsupervised-learning[教師なし学習とは]、link:https://cloud.google.com/discover/what-is-reinforcement-learning[強化学習とは]

@@ -1,0 +1,20 @@
+= 基盤モデルの選定基準
+include::../_attributes.adoc[]
+
+[cols="1,2", options="header"]
+|===
+| 基準 | 見るところ
+
+| モダリティ | 扱う入出力（テキスト／画像／音声／動画／コード）
+| コンテキストウィンドウ | 一度に渡せる入力量
+| セキュリティ | データの取り扱い、統制要件への適合
+| 可用性・信頼性 | 提供リージョン、SLA
+| コスト | トークン単価、推論基盤の費用
+| パフォーマンス | 応答速度、精度
+| ファインチューニング可否 | 追加学習で調整できるか
+| カスタマイズ性 | 用途別に作り替えられるか（Gemma など）
+|===
+
+- モデルカード（<<model-garden>>）で対応タスクとチューニング可否を確認できる。
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-garden/explore-models[Model Garden の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/long-context[長いコンテキスト]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tuning[チューニングの概要]

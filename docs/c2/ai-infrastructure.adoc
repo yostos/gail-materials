@@ -1,0 +1,38 @@
+= AI 向けインフラ
+include::../_attributes.adoc[]
+
+[cols="1,5", options="header"]
+|===
+| アクセラレータ | 位置づけ
+
+| Cloud TPU | Google が機械学習ワークロード向けに設計した専用アクセラレータ。大規模な深層学習モデルや基盤モデルの学習・推論に適する
+| GPU | NVIDIA GPU などを、Vertex AI のカスタムトレーニング、推論エンドポイント、GKE 上の AI ワークロードで利用する
+|===
+
+TPU の内部要素。
+
+[cols="1,2", options="header"]
+|===
+| 要素 | 役割
+
+| Matrix Multiplication Unit | 行列乗算の専用ユニット
+| High Bandwidth Memory | 大きなモデルや大きなバッチサイズを支えるメモリ帯域
+| XLA コンパイラ | 線形代数、損失、勾配計算を TPU 向けマシンコードにコンパイルする
+|===
+
+- 大規模な行列演算・テンソル演算・並列計算を高速化する層。
+- 「学習や推論の基盤を担うインフラストラクチャ層」を問われたら、開発画面（Vertex AI Studio）でもモデルカタログ（Model Garden）でも会話設計（Conversational Agents）でもなく、実際の計算資源であるここ。
+- TPU は畳み込み層・全結合層で発生するテンソル演算、行列乗算、積和演算を並列処理する。
+
+外れる選択肢。
+
+[cols="1,2", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Compute Engine の汎用 CPU | 専用アクセラレータではない
+| ストレージ I/O 最適化 | データアクセスの話。演算そのものを速くしない
+| エッジ推論環境 | クラウド上での大規模トレーニングとは別の場所
+|===
+
+出典: link:https://docs.cloud.google.com/tpu/docs/intro-to-tpu[Cloud TPU の概要]、link:https://docs.cloud.google.com/tpu/docs/system-architecture-tpu-vm[TPU アーキテクチャ]、link:https://docs.cloud.google.com/compute/docs/gpus[GPU マシンタイプ]

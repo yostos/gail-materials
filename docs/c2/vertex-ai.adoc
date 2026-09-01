@@ -1,0 +1,117 @@
+= Vertex AI — 作る側の基盤
+include::../_attributes.adoc[]
+
+[cols="1,2", options="header"]
+|===
+| 構成要素 | 役割
+
+| データセット | 学習データの作成・管理
+| AutoML／カスタムトレーニング | モデルの学習
+| Model Registry | 学習済みモデルの登録とバージョン管理
+| Feature Store | 機械学習特徴量の管理と提供
+| Endpoint | デプロイ先。オンライン予測とバッチ予測
+| Gemini API | 基盤モデルの直接呼び出し
+| Model Garden | モデルの発見、テスト、カスタマイズ、デプロイ
+| Vertex AI Studio | Vertex AI 内でのプロンプト設計・試行
+| グラウンディング | 外部データに応答を紐づけて根拠を持たせる
+| Vertex AI RAG Engine | RAG パイプラインの構成
+| Vertex AI Workbench | マネージドノートブックによる開発・分析環境
+| Vertex Explainable AI | 予測に対する特徴量の寄与を出す
+| Vertex AI Pipelines | ML ワークフローの自動化
+| Model Evaluation | モデル全体の性能とバイアス傾向の検証
+| Model Monitoring | 本番モデルの品質、スキュー、ドリフト、精度低下の監視
+|===
+
+本質は2つ。
+
+[cols="1,3", options="header"]
+|===
+| 本質 | 対応する課題
+
+| ML ライフサイクル全体を同じ基盤で扱える | 「チームごとに開発環境が分断されている」「モデル管理とデプロイの負荷が増えている」
+| 計算資源を自分で持たなくてよい | 「GPU リソースを自己管理せずに、チューニングから推論エンドポイントのホスティングまで統合的に行いたい」
+|===
+
+- 後者は Model Garden・チューニング API・オンライン予測エンドポイント＋基盤の TPU / GPU が込みで提供されるため。
+- 社内ドキュメント検索を伴う対話型 AI なら、Vertex AI Search・グラウンディング・RAG 構成を組み合わせる。
+
+外れる選択肢。
+
+[cols="1,3", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| BigQuery（BigQuery ML） | 大規模データ分析。ML ライフサイクルの一部しか担わない
+| Google Kubernetes Engine | コンテナ実行基盤
+| 用途別の事前学習済み API | 特定機能の利用にとどまる
+| Compute Engine | GPU VM は使えるが、モデル運用と推論基盤を自分で構築することになる
+| Cloud Run | アプリケーション実行基盤。基盤モデルのチューニング機能を持たない
+| Cloud Spanner | データベース
+|===
+
+[#model-garden]
+== Model Garden — モデルの選択肢を確保する
+
+[cols="1,5", options="header"]
+|===
+| 観点 | 内容
+
+| 扱うモデル | Google のファーストパーティ、パートナー、オープンモデル
+| できること | 探索、テスト、カスタマイズ、デプロイ。コンソールと CLI から利用
+| 選択の軸 | 用途、性能、コスト、ライセンス、運用要件
+| モデルカード | 利用方法、対応タスク、デプロイ条件、チューニング可否
+| 利用形態 | Model as a Service として呼ぶ／オープンモデルを自分のエンドポイントにデプロイ
+|===
+
+対応する要件。
+
+[cols="1,2", options="header"]
+|===
+| 要件 | ここが答えになる理由
+
+| 特定ベンダーの独自モデル・独自基盤に固定されたくない | 提供元をまたいで選べ、将来のモデル変更と移行の余地を残せる
+| モデル構築の専門知識がない／リリース期限が迫っている | 事前トレーニング済み基盤モデルを選び、プロンプト設計・システム指示・Few-shot 例・生成パラメータで応答品質に近づけられる
+|===
+
+- モデル選定とプロンプト検証を先に済ませ、アプリから Vertex AI API を呼ぶ構成にすれば、GPU サーバー構築も学習パイプライン設計も不要。
+
+外れる選択肢。
+
+[cols="1,3", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| BigQuery ML | データウェアハウス内で SQL によりモデルを組む機能。提供元の選択とは別
+| Vertex AI AutoML | 教師あり学習の自動化。運用負荷は下がるがモデル選択の要件には対応しない
+| Cloud Monitoring／Cloud Logging | メトリクス・ログ・レイテンシー・リソース使用量の可視化。移行余地の確保ではない
+|===
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-garden/explore-models[Model Garden の概要]、link:https://cloud.google.com/model-garden[Model Garden 製品ページ]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/models[利用できるモデルの一覧]
+
+== Model Registry — モデルを一元管理する
+
+[cols="1,3", options="header"]
+|===
+| 管理するもの | 内容
+
+| バージョン | 複数版を識別する
+| エイリアス・ラベル | `default` などで本番用・検証用・ロールバック用を区別
+| 評価情報 | 版ごとの性能
+| デプロイ状態 | どの版がどこで動いているか
+|===
+
+- Registry からそのまま推論エンドポイントへデプロイできる。単なるファイル保管とは違う。
+- 対応する課題: 開発者が各自の環境に重みを置いていて、リリース時にバージョンを取り違える。
+
+外れる選択肢。
+
+[cols="1,3", options="header"]
+|===
+| 選択肢 | 外れる理由
+
+| Artifact Registry | コンテナイメージとパッケージの管理。モデルのバージョン履歴とデプロイ管理には足りない
+| Cloud Source Repositories | ソースコードの Git リポジトリ
+| Feature Store | 特徴量の管理と提供。モデル本体のバージョン管理ではない
+|===
+
+出典: link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-registry/introduction[Model Registry の概要]、link:https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-registry/versioning[モデルのバージョン管理]

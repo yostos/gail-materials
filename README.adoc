@@ -1,0 +1,161 @@
+= gail-materials
+:lang: ja
+:toc: macro
+:toc-title: 目次
+:toclevels: 2
+
+Google Cloud Generative AI Leader 認定試験の対策資料。AsciiDoc で執筆し、PDF と HTML を生成する。
+
+**これは個人が学習のためにまとめた非公式のノートであり、Google LLC とは一切関係がない。**
+内容の正確性は保証しない。<<免責事項>> を必ず読むこと。
+
+toc::[]
+
+== ダウンロード
+
+生成済みの PDF と HTML は link:https://github.com/yostos/gail-materials/releases/latest[Releases] から入手できる。
+
+[cols="1,4", options="header"]
+|===
+| ファイル | 内容
+
+| `gail.pdf` | 全体を1つの PDF に。印刷・タブレット向け
+| `gail.html` | 全体を1ファイルの HTML に。画像を data URI で埋め込み済み
+|===
+
+== このドキュメントについて
+
+=== 位置づけ
+
+* 著者が Google Cloud Generative AI Leader 認定試験を受験するにあたり、**自分の理解を整理するために書いた個人の学習ノート**である。
+* Google LLC およびその関連会社が作成・監修・承認したものではない。公式教材でも、公式教材の要約でもない。
+* 公式の学習パス、試験ガイド、製品ドキュメントを**置き換えるものではない**。本ノートは、それらを読む際の索引・地図として使うことを想定している。
+* 認定試験の合格を保証するものではない。
+* 実際の試験問題は含まれていない。Google の認定試験は受験時に守秘義務に同意する必要があり、本ノートは公開情報のみを出典としている。
+
+=== 情報の時点
+
+* 記載内容は **2026-08-27 時点**で確認した公開情報にもとづく。
+* 各章・各節の出典は本文中に記載している。判断に使う前に、必ず出典元の一次情報を確認すること。
+* Google Cloud の生成AI製品は**改称・統合・提供終了が頻繁に起こる**。特に Vertex AI 系は本ノート作成時点で改称の途上にあり、公式試験ガイドと公式模擬試験の間ですら表記が一致していない。本ノートがどちらの表記を採用したかは「この試験について > 製品名の新旧」に一覧でまとめている。
+* 試験の出題範囲・配点・受験料・提供言語も変更されうる。link:https://cloud.google.com/learn/certification/generative-ai-leader[認定ページ]で最新を確認すること。
+* 各リリースの時点は link:https://github.com/yostos/gail-materials/releases[Releases] のタグと日付で確認できる。**古いリリースの内容は、時間が経つほど実態から乖離する。**
+
+=== 免責事項
+
+本ドキュメントは「現状有姿（AS IS）」で提供される。
+
+* 著者は、記載内容の**正確性・完全性・最新性・特定目的への適合性について、明示・黙示を問わずいかなる保証も行わない**。誤り、古い情報、著者の誤解が含まれている可能性がある。
+* 本ドキュメントの利用、または利用できなかったことによって生じたいかなる損害（試験の不合格、業務上の判断の誤り、機会損失を含むがこれらに限らない）についても、著者は**一切の責任を負わない**。
+* 本ドキュメントは、技術的助言・法的助言・調達判断の根拠として提供されるものではない。実際の設計・調達・コンプライアンス判断は、必ず一次情報と有資格の専門家の助言にもとづいて行うこと。
+* 本ドキュメントの内容は著者個人の見解であり、著者の所属する組織の見解を代表するものではない。
+* Google Cloud、Google、Gemini、Vertex AI、NotebookLM その他の製品名・サービス名は、Google LLC の商標または登録商標である。その他の商標は各権利者に帰属する。本ドキュメントにおけるこれらの使用は識別を目的とするものであり、権利者による後援・提携・承認を示すものではない。
+
+誤りを見つけた場合は link:https://github.com/yostos/gail-materials/issues[Issues] で指摘してもらえると助かる。ただし、修正の対応や返答を約束するものではない。
+
+== 内容
+
+生成AIの基礎、Google Cloud の生成AI製品、出力の改善技法、ビジネス戦略と責任あるAI の4章に、
+試験概要と2つの付録を加えた構成。要件から製品・技法を引ける形にまとめている。
+
+== 必要なもの
+
+自分でビルドする場合のみ必要。読むだけなら <<ダウンロード>> を見ること。
+
+* Asciidoctor 2.0 以降
+* Asciidoctor PDF 2.3 以降
+* asciidoctor-diagram
+* Rouge（ソースコードのシンタックスハイライト用）
+* Python 3.8 以降（`scripts/md2adoc.py` を使う場合のみ）
+* 更紗ゴシック（Sarasa Mono J）の TTF。PDF に埋め込むため `fonts/` に配置する。取得方法は <<フォントの準備>> を見ること。
+
+[source,console]
+----
+$ gem install asciidoctor asciidoctor-pdf asciidoctor-diagram rouge
+----
+
+=== フォントの準備
+
+PDF ビルドには更紗ゴシックが必要だが、サイズが大きいためリポジトリには含めていない。
+link:https://github.com/be5invis/Sarasa-Gothic/releases[Sarasa-Gothic のリリース]から
+`SarasaMonoJ-TTF-<version>.7z` を取得し、次の4ファイルを `fonts/` に配置する。
+
+[cols="1,1", options="header"]
+|===
+| アーカイブ内 | `fonts/` での名前
+
+| `SarasaMonoJ-Regular.ttf` | `sarasa-mono-j-regular.ttf`
+| `SarasaMonoJ-Italic.ttf` | `sarasa-mono-j-italic.ttf`
+| `SarasaMonoJ-Bold.ttf` | `sarasa-mono-j-bold.ttf`
+| `SarasaMonoJ-BoldItalic.ttf` | `sarasa-mono-j-bolditalic.ttf`
+|===
+
+`make fonts` でこの手順を自動化できる（`curl` と `7z` が必要）。
+
+== ビルド
+
+[source,console]
+----
+$ make            # ヘルプを表示
+$ make fonts      # PDF 用のフォントを取得
+$ make all        # 全体の PDF と HTML を生成
+$ make pdf        # 全体の PDF のみ
+$ make html       # 全体の HTML のみ
+$ make pdf-c3     # 3章だけを PDF に（html-c3 も同様）
+$ make chapters   # 全章を個別の PDF/HTML に
+$ make check      # 壊れた include・相互参照を検出
+$ make clean      # 生成物を削除
+----
+
+生成物は `build/pdf/gail.pdf`、`build/html/gail.html`。`build/` は Git の管理対象外。
+
+== リリース
+
+`v` で始まるタグを push すると、GitHub Actions が PDF と HTML を生成して Release に添付する。
+
+[source,console]
+----
+$ git tag -a v0.1.0 -m "..."
+$ git push origin v0.1.0
+----
+
+== ディレクトリ構成
+
+[source]
+----
+docs/
+  index.adoc          全体をまとめる親文書
+  _attributes.adoc    全文書共通の属性
+  disclaimer.adoc     位置づけと免責事項（全体ビルドの冒頭に入る）
+  c0/                 この試験について（前付け）
+  c1/                 生成AIの基礎
+  c2/                 Google Cloud の生成AI製品
+  c3/                 出力の改善技法
+  c4/                 ビジネス戦略と責任あるAI
+  appendix/           付録A（用途からの逆引き）、付録B（GCP↔AWS 対比表）
+scripts/
+  build-pdf.sh        PDF を生成する
+  build-html.sh       HTML を生成する
+  fetch-fonts.sh      更紗ゴシックを取得して fonts/ に配置する
+  md2adoc.py          学習ノート（Markdown）から docs/ を再生成する
+  unbreakable-tables.rb  表がページを跨いで分断されるのを防ぐ拡張
+themes/               asciidoctor-pdf のテーマ
+fonts/                PDF に埋め込む更紗ゴシックフォント（Git 管理外）
+----
+
+各章は `c*/index.adoc` が節ごとの `.adoc` を include する。節のファイル単体でもビルドできるが、
+他章を参照する相互参照はリンクにならない。
+
+== 執筆時の約束ごと
+
+* 章・節番号は付けない。`:sectnums:` による自動採番に任せる。
+* 節を跨ぐ参照は番号で書かず、`+<<anchor>>+` で書く。参照先には `+[#anchor]+` を付ける。
+* 強調は `+**...**+`（無制約）を使う。`+*...*+` は前後が日本語だと解釈されない。
+* URL は `+link:URL[表示文字列]+` と書く。読点の直後などでは素の URL が認識されない。
+
+== ライセンス
+
+本文・図表は link:LICENSE[MIT License]。
+
+更紗ゴシック（Sarasa Gothic）は SIL Open Font License 1.1 で配布されている。
+生成される PDF にはこのフォントが埋め込まれるが、OFL はフォントを埋め込んだ文書の配布を制限しない。
