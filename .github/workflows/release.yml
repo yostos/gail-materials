@@ -1,0 +1,113 @@
+# タグを push すると PDF と HTML を生成して Release に添付する。
+#
+#   git tag -a v0.1.0 -m "..." && git push origin v0.1.0
+#
+# 手動実行(workflow_dispatch)ではビルドの確認だけを行い、Release は作らない。
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  SARASA_VERSION: "1.0.41"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      # p7zip: 更紗ゴシックの配布形式(.7z)を展開する
+      # graphviz: asciidoctor-diagram のバックエンド
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends p7zip-full graphviz
+
+      - name: Install Asciidoctor
+        run: gem install --no-document asciidoctor asciidoctor-pdf asciidoctor-diagram rouge
+
+      # フォントは約94MB。バージョンを変えない限り再ダウンロードしない。
+      - name: Cache fonts
+        uses: actions/cache@v4
+        with:
+          path: fonts
+          key: sarasa-${{ env.SARASA_VERSION }}
+
+      - name: Fetch fonts
+        run: make fonts
+
+      # revnumber はタグ名から、revdate はタグが指すコミットの日付から決める。
+      # ビルド日ではなく内容が確定した日を載せる。
+      - name: Resolve document version
+        id: version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            revnumber="${GITHUB_REF_NAME#v}"
+          else
+            revnumber="0.0.0-dev+$(git rev-parse --short HEAD)"
+          fi
+          revdate="$(git log -1 --format=%cs)"
+          echo "revnumber=${revnumber}" >> "${GITHUB_OUTPUT}"
+          echo "revdate=${revdate}" >> "${GITHUB_OUTPUT}"
+          echo ">> revnumber=${revnumber} revdate=${revdate}"
+
+      - name: Build PDF and HTML
+        env:
+          ASCIIDOC_ATTRS: >-
+            -a revnumber=${{ steps.version.outputs.revnumber }}
+            -a revdate=${{ steps.version.outputs.revdate }}
+        run: make all
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gail-${{ steps.version.outputs.revnumber }}
+          path: |
+            build/pdf/gail.pdf
+            build/html/gail.html
+
+      - name: Create release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVNUMBER: ${{ steps.version.outputs.revnumber }}
+          REVDATE: ${{ steps.version.outputs.revdate }}
+        run: |
+          cat > notes.md <<'NOTES'
+          Google Cloud Generative AI Leader 認定試験の対策資料。
+
+          | ファイル | 内容 |
+          | --- | --- |
+          | `gail.pdf` | 全体を1つの PDF に |
+          | `gail.html` | 全体を1ファイルの HTML に（画像は埋め込み済み） |
+
+          ---
+
+          **これは個人が学習のためにまとめた非公式のノートです。**
+          Google LLC およびその関連会社が作成・監修・承認したものではありません。
+          内容の正確性・完全性・最新性は保証されず、誤りが含まれている可能性があります。
+          本資料の利用によって生じたいかなる損害についても著者は責任を負いません。
+          判断に使う前に、必ず公式の一次情報を確認してください。
+          実際の試験問題は含まれていません。
+
+          詳細は同梱の「本ノートについて」および
+          [README](https://github.com/yostos/gail-materials#readme) を参照してください。
+          NOTES
+          printf '\n記載内容は **%s 時点**で確認した公開情報にもとづきます。\n' "${REVDATE}" >> notes.md
+
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --notes-file notes.md \
+            build/pdf/gail.pdf \
+            build/html/gail.html
