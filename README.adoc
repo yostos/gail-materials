@@ -63,7 +63,7 @@ Google Cloud Generative AI Leader（GAIL）認定資格試験に向けて、生�
 * asciidoctor-diagram
 * Rouge（ソースコードのシンタックスハイライト用）
 * Python 3.8 以降（`scripts/md2adoc.py` を使う場合のみ）
-* 更紗ゴシック（Sarasa Mono J）の TTF。PDF に埋め込むため `fonts/` に配置する。取得方法は <<フォントの準備>> を見ること。
+* BIZ UDGothic の TTF。PDF に埋め込むため `build/fonts/` に配置する。取得方法は <<フォントの準備>> を見ること。
 
 [source,console]
 ----
@@ -72,28 +72,36 @@ $ gem install asciidoctor asciidoctor-pdf asciidoctor-diagram rouge
 
 === フォントの準備
 
-PDF ビルドには更紗ゴシックが必要だが、サイズが大きいためリポジトリには含めていない。
-link:https://github.com/be5invis/Sarasa-Gothic/releases[Sarasa-Gothic のリリース]から
-`SarasaMonoJ-TTF-<version>.7z` を取得し、次の4ファイルを `fonts/` に配置する。
+PDF には日本語フォントの埋め込みが必要になる。asciidoctor-pdf が同梱するフォントのうち
+日本語を持つのは M+ 1p Fallback の Regular だけで、太字がすべて擬似ボールドになるため、
+link:https://fonts.google.com/specimen/BIZ+UDGothic[BIZ UDGothic] を別途取得して使う。
 
-[cols="1,1", options="header"]
+[source,console]
+----
+$ make fonts
+----
+
+link:https://github.com/google/fonts[google/fonts] のコミットを固定して次の3ファイルを
+`build/fonts/` に置く。取得物であってソースではないため、Git の管理対象外である。
+
+[cols="2,3", options="header"]
 |===
-| アーカイブ内 | `fonts/` での名前
+| ファイル | 用途
 
-| `SarasaMonoJ-Regular.ttf` | `sarasa-mono-j-regular.ttf`
-| `SarasaMonoJ-Italic.ttf` | `sarasa-mono-j-italic.ttf`
-| `SarasaMonoJ-Bold.ttf` | `sarasa-mono-j-bold.ttf`
-| `SarasaMonoJ-BoldItalic.ttf` | `sarasa-mono-j-bolditalic.ttf`
+| `BIZUDGothic-Regular.ttf` | 本文
+| `BIZUDGothic-Bold.ttf` | 太字・見出し
+| `OFL.txt` | SIL Open Font License 1.1 の本文
 |===
 
-`make fonts` でこの手順を自動化できる（`curl` と `7z` が必要）。
+コード（`+[source]+` ブロックと `+`...`+`）は asciidoctor-pdf 同梱の M+ 1mn を使うため、
+追加の取得は不要である。
 
 == ビルド
 
 [source,console]
 ----
 $ make            # ヘルプを表示
-$ make fonts      # PDF 用のフォントを取得
+$ make fonts      # PDF 用のフォントを build/fonts に取得
 $ make all        # 全体の PDF と HTML を生成
 $ make pdf        # 全体の PDF のみ
 $ make html       # 全体の HTML のみ
@@ -104,6 +112,8 @@ $ make clean      # 生成物を削除
 ----
 
 生成物は `build/pdf/gail.pdf` と `build/html/gail.html` に出力される。`build/` は Git の管理対象外である。
+`make clean` が消すのは PDF と HTML だけで、`build/fonts/` は残る。フォントを取り直すときは
+`+./scripts/fetch-fonts.sh --force+` を使う。
 
 == リリース
 
@@ -132,11 +142,11 @@ docs/
 scripts/
   build-pdf.sh        PDF を生成する
   build-html.sh       HTML を生成する
-  fetch-fonts.sh      更紗ゴシックを取得して fonts/ に配置する
+  fetch-fonts.sh      BIZ UDGothic を取得して build/fonts/ に配置する
   md2adoc.py          学習ノート（Markdown）から docs/ を再生成する
   unbreakable-tables.rb  表がページを跨いで分断されるのを防ぐ拡張
 themes/               asciidoctor-pdf のテーマ
-fonts/                PDF に埋め込む更紗ゴシックフォント（Git 管理外）
+build/                生成物と取得したフォント（Git 管理外）
 ----
 
 各章は `c*/index.adoc` が節ごとの `.adoc` を include する。節のファイル単体でもビルドできるが、
@@ -146,5 +156,6 @@ fonts/                PDF に埋め込む更紗ゴシックフォント（Git �
 
 本文・図表は link:LICENSE[MIT License] のもとで公開する。
 
-更紗ゴシック（Sarasa Gothic）は SIL Open Font License 1.1 で配布されている。
+BIZ UDGothic は SIL Open Font License 1.1 で配布されている。
 生成される PDF にはこのフォントが埋め込まれるが、OFL はフォントを埋め込んだ文書の配布を制限しない。
+ライセンス本文は `make fonts` が `build/fonts/OFL.txt` に取得する。

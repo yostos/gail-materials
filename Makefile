@@ -6,7 +6,7 @@ CHAPTERS := $(notdir $(patsubst %/,%,$(dir $(wildcard docs/*/index.adoc))))
 
 all: pdf html ## 全体のPDFとHTMLを両方生成する。
 
-fonts: ## PDFに埋め込む更紗ゴシックを取得する。
+fonts: ## PDFに埋め込む BIZ UDGothic を build/fonts に取得する。
 	@./scripts/fetch-fonts.sh
 
 pdf: fonts ## 全体のPDFを生成する。

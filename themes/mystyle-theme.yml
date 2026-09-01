@@ -2,15 +2,16 @@ extends: default
 font:
   catalog:
     merge: true
-    SarasaMonoJP:
-      normal: sarasa-mono-j-regular.ttf
-      italic: sarasa-mono-j-italic.ttf
-      bold: sarasa-mono-j-bold.ttf
-      bold_italic: sarasa-mono-j-bolditalic.ttf
+    # BIZ UDGothic はモリサワの UD 等幅ゴシック。イタリックを持たないため
+    # italic には Regular を、bold_italic には Bold を割り当てる。
+    # 日本語にイタリックの習慣はなく、擬似イタリックより素直な字形が読める。
+    BIZ UDGothic:
+      normal: BIZUDGothic-Regular.ttf
+      bold: BIZUDGothic-Bold.ttf
+      italic: BIZUDGothic-Regular.ttf
+      bold_italic: BIZUDGothic-Bold.ttf
     M+ 1p Fallback: GEM_FONTS_DIR/mplus1p-regular-fallback.ttf
     Noto Emoji: GEM_FONTS_DIR/notoemoji-subset.ttf
   fallbacks: [M+ 1p Fallback, Noto Emoji]
 base:
-  font_family: SarasaMonoJP
-conum:
-  font_family: SarasaMonoJP
+  font_family: BIZ UDGothic

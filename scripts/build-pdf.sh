@@ -31,13 +31,14 @@ mkdir -p "${TARGET_PATH}"
 
 echo ">> Converting AsciiDoc to PDF: ${SOURCE#"${ROOT_PATH}"/}"
 
-# 日本語の行分割(scripts=cjk)と更紗フォント埋め込み(themes/fonts)を有効にする。
+# 日本語の行分割(scripts=cjk)と BIZ UDGothic の埋め込みを有効にする。
+# フォントは scripts/fetch-fonts.sh が build/fonts へ取得する。
 # unbreakable-tables.rb は表のページ跨ぎ分断を防ぐ拡張。
 asciidoctor-pdf \
   -a scripts=cjk \
   -a pdf-theme=mystyle-theme.yml \
   -a pdf-themesdir="${ROOT_PATH}/themes" \
-  -a pdf-fontsdir="${ROOT_PATH}/fonts" \
+  -a pdf-fontsdir="${ROOT_PATH}/build/fonts" \
   -r asciidoctor-diagram \
   -r "${ROOT_PATH}/scripts/unbreakable-tables.rb" \
   "${EXTRA_ATTRS[@]}" \

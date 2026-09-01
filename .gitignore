@@ -99,7 +99,3 @@ build/
 
 # Claude Code のローカル設定
 .claude/
-
-# PDF に埋め込む更紗ゴシック。サイズが大きいため管理対象外。
-# scripts/fetch-fonts.sh（make fonts）で取得する。
-fonts/*.ttf
