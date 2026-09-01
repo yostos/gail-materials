@@ -1,16 +1,11 @@
 = Google Cloud Generative AI Leader 認定試験の対策資料
 :lang: ja
-:toc: macro
-:toc-title: 目次
-:toclevels: 2
 
 Google Cloud Generative AI Leader 認定試験に向けて、生成AIの基礎から Google Cloud の製品群までを
 整理した学習ノートである。本文は AsciiDoc で書き、PDF と HTML を生成する。
 
 **本ノートは個人が学習のためにまとめた非公式の資料であり、Google LLC とは関係がない。
 記載内容の正確性は保証しない。** 利用する前に <<免責事項>> を必ず読むこと。
-
-toc::[]
 
 == ダウンロード
 
@@ -147,16 +142,9 @@ fonts/                PDF に埋め込む更紗ゴシックフォント（Git �
 各章は `c*/index.adoc` が節ごとの `.adoc` を include する。節のファイル単体でもビルドできるが、
 他章を参照する相互参照はリンクにならない。
 
-== 執筆時の約束ごと
-
-* 章・節番号は付けない。`:sectnums:` による自動採番に任せる。
-* 節を跨ぐ参照は番号で書かず、`+<<anchor>>+` で書く。参照先には `+[#anchor]+` を付ける。
-* 強調は `+**...**+`（無制約）を使う。`+*...*+` は前後が日本語だと解釈されない。
-* URL は `+link:URL[表示文字列]+` と書く。読点の直後などでは素の URL が認識されない。
-
 == ライセンス
 
-本文・図表は link:LICENSE[MIT License]。
+本文・図表は link:LICENSE[MIT License] のもとで公開する。
 
 更紗ゴシック（Sarasa Gothic）は SIL Open Font License 1.1 で配布されている。
 生成される PDF にはこのフォントが埋め込まれるが、OFL はフォントを埋め込んだ文書の配布を制限しない。
